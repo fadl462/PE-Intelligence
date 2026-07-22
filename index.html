@@ -170,6 +170,8 @@ button{font-family:inherit; cursor:pointer;}
 .sidebar-footer{
   margin-top:auto; padding-top:14px; border-top:1px solid var(--border-soft);
 }
+.sidebar-theme-row{display:flex; align-items:center; justify-content:space-between; padding:2px 8px 12px;}
+.sidebar-theme-label{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; font-weight:600;}
 .security-strip{
   display:flex; flex-wrap:wrap; gap:5px; padding:10px 8px 4px;
 }
@@ -483,6 +485,18 @@ input[type=range]::-webkit-slider-thumb{
 .two-col{display:grid; grid-template-columns:1.3fr .9fr; gap:14px;}
 @media (max-width:1300px){.two-col{grid-template-columns:1fr;}}
 
+/* ---------- UPLOAD DROPZONE ---------- */
+.upload-dropzone{
+  border:1.5px dashed var(--border); border-radius:12px; padding:22px 20px;
+  text-align:center; color:var(--text-dim); transition:border-color .15s, background .15s;
+}
+.upload-dropzone:hover{border-color:var(--emerald-line); background:var(--emerald-dim);}
+.upload-dropzone-icon{
+  width:42px; height:42px; margin:0 auto; border-radius:12px; background:var(--bg-3);
+  display:flex; align-items:center; justify-content:center; color:var(--emerald);
+}
+.upload-dropzone-icon svg{width:20px; height:20px;}
+
 /* ---------- TOOLTIP SYSTEM ---------- */
 [data-tip]{position:relative;}
 [data-tip]::after{
@@ -617,7 +631,7 @@ input[type=range]::-webkit-slider-thumb{
   .houn-ticker{ display:none; }
   .search-fake{ width:auto; flex:1; min-width:0; }
   .search-fake span:not(.kbd){ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .theme-switcher{ display:none; }
+  .topbar-theme-switcher{ display:none; }
 }
 @media (max-width:760px){
   #main{ padding:16px 14px 90px; }
@@ -680,12 +694,16 @@ input[type=range]::-webkit-slider-thumb{
     <div class="nav-item" data-view="settings"></div>
 
     <div class="sidebar-footer">
+      <div class="sidebar-theme-row">
+        <span class="sidebar-theme-label">Theme</span>
+        <div class="theme-switcher" id="theme-switcher-sidebar"></div>
+      </div>
       <div class="security-strip" id="sec-strip"></div>
       <div class="user-row">
-        <div class="avatar">D</div>
+        <div class="avatar">F</div>
         <div>
-          <div class="user-name">David Mensah-Brew</div>
-          <div class="user-role">Managing Partner</div>
+          <div class="user-name">Fadl</div>
+          <div class="user-role">Inscend Consulting</div>
         </div>
       </div>
     </div>
@@ -712,7 +730,7 @@ input[type=range]::-webkit-slider-thumb{
       <span class="kbd">⌘K</span>
     </div>
 
-    <div class="theme-switcher" id="theme-switcher"></div>
+    <div class="theme-switcher topbar-theme-switcher" id="theme-switcher"></div>
 
     <div style="position:relative;">
       <div class="topbar-icon-btn" id="notif-btn" data-tip="Notifications from Lani"></div>

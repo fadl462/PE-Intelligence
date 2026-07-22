@@ -301,11 +301,11 @@ const PORTFOLIO_COMPANIES = [
 ];
 
 const FUND_STATS = [
-  { label: "Portfolio Companies", value: "14" },
-  { label: "Fund Value (NAV)", value: "$268M" },
-  { label: "Unrealized Gain", value: "$91M" },
-  { label: "Cash Remaining", value: "$58M" },
-  { label: "Average IRR", value: "23%" },
+  { label: "Portfolio Companies", value: "14", detail: "14 active positions across renewable energy, fintech, logistics, agritech, and healthtech." },
+  { label: "Fund Value (NAV)", value: "$268M", detail: "Net Asset Value across all active positions, up from $245M last quarter on markups at GreenTech Solar and Nova Freightlink." },
+  { label: "Unrealized Gain", value: "$91M", detail: "Mark-to-market gain on positions not yet exited, based on the latest round valuations and comparable transactions." },
+  { label: "Cash Remaining", value: "$58M", detail: "Dry powder available for new deployments and follow-on rounds in existing portfolio companies." },
+  { label: "Average IRR", value: "23%", detail: "Weighted average annualized return across all active portfolio positions since initial investment." },
 ];
 
 const COMPLIANCE = [

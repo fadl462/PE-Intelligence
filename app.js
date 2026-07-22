@@ -95,7 +95,7 @@ const afterRenderHooks = {};
 function renderDashboard() {
   return `
     <div class="view-header">
-      <div class="view-title">Good morning, David.</div>
+      <div class="view-title">Good morning, Fadl.</div>
       <div class="view-desc">Lani has analyzed 3 new investment opportunities overnight across 1,204 documents.</div>
     </div>
 
@@ -161,10 +161,20 @@ afterRenderHooks.dashboard = () => {
   const data = [3,5,4,6,5,8,7,9,8,11,10,13,12,15];
   activeChartInstances.push(new Chart(ctx, {
     type: "line",
-    data: { labels: days, datasets: [{ data, borderColor:getCssVar('--emerald'), backgroundColor:"rgba(47,223,160,.08)", fill:true, tension:.4, pointRadius:0, borderWidth:2 }]},
-    options: { plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}} } }
+    data: { labels: days, datasets: [{ data, borderColor:getCssVar('--emerald'), backgroundColor:"rgba(47,223,160,.08)", fill:true, tension:.4, pointRadius:0, pointHoverRadius:6, borderWidth:2 }]},
+    options: withChartInteractivity({ plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}} } }, (el) => {
+      openDetail(`Day ${el.index + 1}`, `Lani reviewed ${data[el.index]} deals on this day across the fund's active pipeline.`, "REVIEW VELOCITY");
+    })
   }));
 };
+
+// Merge Chart.js onClick/onHover interactivity into an options object.
+function withChartInteractivity(options, onPointClick) {
+  options.interaction = options.interaction || { mode: "nearest", intersect: false };
+  options.onHover = (evt, elements) => { if (evt.native && evt.native.target) evt.native.target.style.cursor = elements.length ? "pointer" : "default"; };
+  options.onClick = (evt, elements) => { if (elements.length && onPointClick) onPointClick(elements[0]); };
+  return options;
+}
 
 function getCssVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#2FDFA0";
@@ -198,17 +208,17 @@ function renderDeals() {
     <div class="two-col">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Upload Data Room — GreenTech Solar</div>
-        <div style="border:1.5px dashed var(--border); border-radius:12px; padding:30px; text-align:center; color:var(--text-dim);">
-          ${ICONS.upload}
-          <div style="margin-top:10px; font-size:13px;">Drag files here, or connect a source</div>
-          <div class="btn-row" style="justify-content:center; margin-top:16px;">
+        <div class="upload-dropzone">
+          <div class="upload-dropzone-icon">${ICONS.upload}</div>
+          <div style="margin-top:8px; font-size:13px;">Drag files here, or connect a source</div>
+          <div class="btn-row" style="justify-content:center; margin-top:14px;">
             <button class="btn ghost" data-tip="Upload a .zip archive" onclick="showToast('Zip upload is simulated in this prototype.')">Zip Upload</button>
             <button class="btn ghost" data-tip="Connect Dropbox" onclick="showToast('Dropbox connection is simulated in this prototype.')">Dropbox</button>
             <button class="btn ghost" data-tip="Connect Google Drive" onclick="showToast('Google Drive connection is simulated in this prototype.')">Google Drive</button>
             <button class="btn ghost" data-tip="Connect OneDrive" onclick="showToast('OneDrive connection is simulated in this prototype.')">OneDrive</button>
             <button class="btn ghost" data-tip="Connect a Virtual Data Room provider (Intralinks, Datasite…)" onclick="showToast('Virtual Data Room connection is simulated in this prototype.')">Virtual Data Room</button>
           </div>
-          <div class="btn-row" style="justify-content:center; margin-top:18px;">
+          <div class="btn-row" style="justify-content:center; margin-top:16px;">
             <button class="btn primary" id="simulate-upload-btn" data-tip="Watch Lani classify a sample data room">Simulate Upload</button>
           </div>
         </div>
@@ -449,7 +459,9 @@ function drawCashflowChart() {
     data: { labels: years, datasets: [
       { label:"Operating Cash Flow", data: base, backgroundColor: getCssVar('--emerald'), borderRadius:4 },
     ]},
-    options: { plugins:{legend:{labels:{color:"#8C97A8"}}}, scales:{ x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}} } }
+    options: withChartInteractivity({ plugins:{legend:{labels:{color:"#8C97A8"}}}, scales:{ x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}} } }, (el) => {
+      openDetail(`${years[el.index]} Cash Flow`, `Projected operating cash flow of $${base[el.index].toFixed(1)}M under the current ${scenario === 'custom' ? 'custom' : scenario} scenario assumptions.`, "CASH FLOW PROJECTION");
+    })
   });
   activeChartInstances.push(c);
 }
@@ -470,10 +482,10 @@ function lboHTML() {
         <table>
           <thead><tr><th>Sources</th><th>Amount</th><th>Uses</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr><td>Senior Debt</td><td class="mono">$7.2M</td><td>Equity Purchase</td><td class="mono">$12.0M</td></tr>
-            <tr><td>Sponsor Equity</td><td class="mono">$5.4M</td><td>Transaction Fees</td><td class="mono">$0.4M</td></tr>
-            <tr><td>Seller Note</td><td class="mono">$1.0M</td><td>Working Capital</td><td class="mono">$1.2M</td></tr>
-            <tr><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Senior Debt / Equity Purchase', 'Senior Debt: $7.2M raised from the bank facility. Equity Purchase: $12.0M, the largest use of funds, covering the GreenTech Solar equity stake itself.', 'SOURCES & USES')"><td>Senior Debt</td><td class="mono">$7.2M</td><td>Equity Purchase</td><td class="mono">$12.0M</td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Sponsor Equity / Transaction Fees', 'Sponsor Equity: $5.4M contributed directly by the fund. Transaction Fees: $0.4M covering legal, advisory, and diligence costs for the deal.', 'SOURCES & USES')"><td>Sponsor Equity</td><td class="mono">$5.4M</td><td>Transaction Fees</td><td class="mono">$0.4M</td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Seller Note / Working Capital', 'Seller Note: $1.0M in deferred consideration financed by the seller. Working Capital: $1.2M reserved to fund the business through the transition period.', 'SOURCES & USES')"><td>Seller Note</td><td class="mono">$1.0M</td><td>Working Capital</td><td class="mono">$1.2M</td></tr>
+            <tr class="clickable" data-tip="Total transaction size" onclick="openDetail('Total Transaction Size', 'The full $13.6M transaction is fully funded — sources and uses balance exactly, as they must in a completed structure.', 'SOURCES & USES')"><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td></tr>
           </tbody>
         </table>
         <div class="section-label">Returns Analysis</div>
@@ -501,18 +513,32 @@ function lboHTML() {
 function drawLBOCharts() {
   const src = document.getElementById("chart-sources");
   if (src) {
+    const sourceLabels = ["Senior Debt","Sponsor Equity","Seller Note"];
+    const sourceData = [7.2,5.4,1.0];
+    const sourceDesc = {
+      "Senior Debt": "Bank-provided term debt, senior to all other capital in the structure.",
+      "Sponsor Equity": "Capital contributed directly by the fund.",
+      "Seller Note": "Deferred consideration financed by the seller, subordinate to senior debt."
+    };
     activeChartInstances.push(new Chart(src, {
       type: "doughnut",
-      data: { labels:["Senior Debt","Sponsor Equity","Seller Note"], datasets:[{ data:[7.2,5.4,1.0], backgroundColor:[getCssVar('--emerald'),getCssVar('--blue'),getCssVar('--amber')], borderWidth:0 }]},
-      options:{ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }
+      data: { labels:sourceLabels, datasets:[{ data:sourceData, backgroundColor:[getCssVar('--emerald'),getCssVar('--blue'),getCssVar('--amber')], borderWidth:0 }]},
+      options: withChartInteractivity({ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
+        const label = sourceLabels[el.index];
+        openDetail(label, `$${sourceData[el.index].toFixed(1)}M — ${sourceDesc[label]}`, "SOURCES OF FUNDS");
+      })
     }));
   }
   const debt = document.getElementById("chart-debt");
   if (debt) {
+    const debtYears = ["Y0","Y1","Y2","Y3","Y4","Y5"];
+    const debtData = [7.2,6.1,4.8,3.4,2.0,0.8];
     activeChartInstances.push(new Chart(debt, {
       type: "line",
-      data: { labels:["Y0","Y1","Y2","Y3","Y4","Y5"], datasets:[{ data:[7.2,6.1,4.8,3.4,2.0,0.8], borderColor:getCssVar('--amber'), backgroundColor:"rgba(240,169,63,.08)", fill:true, tension:.35, pointRadius:0, borderWidth:2 }]},
-      options:{ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }
+      data: { labels:debtYears, datasets:[{ data:debtData, borderColor:getCssVar('--amber'), backgroundColor:"rgba(240,169,63,.08)", fill:true, tension:.35, pointRadius:0, pointHoverRadius:6, borderWidth:2 }]},
+      options: withChartInteractivity({ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }, (el) => {
+        openDetail(`${debtYears[el.index]} Debt Balance`, `Remaining senior debt balance of $${debtData[el.index].toFixed(1)}M after ${el.index} year(s) of amortization.`, "DEBT PAYDOWN");
+      })
     }));
   }
 }
@@ -541,7 +567,9 @@ function drawMonteCarlo() {
   activeChartInstances.push(new Chart(canvas, {
     type:"bar",
     data:{ labels:buckets, datasets:[{ data:freq, backgroundColor:getCssVar('--blue'), borderRadius:4 }]},
-    options:{ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }
+    options: withChartInteractivity({ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }, (el) => {
+      openDetail(`IRR Range: ${buckets[el.index]}`, `${freq[el.index]}% of the 10,000 simulated paths landed in this IRR range.`, "MONTE CARLO SIMULATION");
+    })
   }));
 }
 
@@ -665,7 +693,10 @@ afterRenderHooks.market = () => {
   activeChartInstances.push(new Chart(ctx, {
     type:"doughnut",
     data:{ labels: MARKET.competitors.map(c=>c.name), datasets:[{ data: MARKET.competitors.map(c=>c.share), backgroundColor:[getCssVar('--emerald'),getCssVar('--blue'),getCssVar('--amber'),"#2A3140"], borderWidth:0 }]},
-    options:{ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }
+    options: withChartInteractivity({ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
+      const c = MARKET.competitors[el.index];
+      openDetail(c.name, `Estimated market share of ${c.share}%, growing ${c.growth} year-over-year.`, "COMPETITOR");
+    })
   }));
 };
 
@@ -725,8 +756,11 @@ afterRenderHooks.risk = () => {
   const ctx = document.getElementById("chart-radar");
   activeChartInstances.push(new Chart(ctx, {
     type:"radar",
-    data:{ labels: RISK_CATEGORIES.map(r=>r.name), datasets:[{ data: RISK_CATEGORIES.map(r=>r.score), backgroundColor:"rgba(47,223,160,.15)", borderColor:getCssVar('--emerald'), pointBackgroundColor:getCssVar('--emerald'), borderWidth:2 }]},
-    options:{ plugins:{legend:{display:false}}, scales:{ r:{ grid:{color:"#1A212C"}, angleLines:{color:"#1A212C"}, pointLabels:{color:"#8C97A8", font:{size:10}}, ticks:{display:false}, min:0, max:100 } } }
+    data:{ labels: RISK_CATEGORIES.map(r=>r.name), datasets:[{ data: RISK_CATEGORIES.map(r=>r.score), backgroundColor:"rgba(47,223,160,.15)", borderColor:getCssVar('--emerald'), pointBackgroundColor:getCssVar('--emerald'), pointHoverRadius:6, borderWidth:2 }]},
+    options: withChartInteractivity({ plugins:{legend:{display:false}}, scales:{ r:{ grid:{color:"#1A212C"}, angleLines:{color:"#1A212C"}, pointLabels:{color:"#8C97A8", font:{size:10}}, ticks:{display:false}, min:0, max:100 } } }, (el) => {
+      const r = RISK_CATEGORIES[el.index];
+      openDetail(`${r.name} Risk`, r.detail, `RISK CATEGORY · SCORE ${r.score}`);
+    })
   }));
 };
 
@@ -739,10 +773,10 @@ function renderIC() {
     </div>
 
     <div class="grid grid-4" style="margin-bottom:18px;">
-      <div class="card stat-card"><div class="stat-label">Investment Requested</div><div class="stat-value">$15M</div></div>
-      <div class="card stat-card"><div class="stat-label">Enterprise Value</div><div class="stat-value">$92M</div></div>
-      <div class="card stat-card"><div class="stat-label">Expected IRR</div><div class="stat-value" style="color:var(--emerald)">28%</div></div>
-      <div class="card stat-card"><div class="stat-label">Confidence</div><div class="stat-value">95%</div></div>
+      <div class="card stat-card clickable" data-tip="Capital being requested for this round" onclick="openDetail('Investment Requested', 'The fund is being asked to commit $15M as part of GreenTech Solar\\'s $12M Series C round plus a small reserve for follow-on.', 'DEAL OVERVIEW')"><div class="stat-label">Investment Requested</div><div class="stat-value">$15M</div></div>
+      <div class="card stat-card clickable" data-tip="Implied valuation of the business" onclick="openDetail('Enterprise Value', 'Implied enterprise value of $92M, based on a 3.8x revenue multiple against FY24 revenue of $18.2M plus a control premium.', 'DEAL OVERVIEW')"><div class="stat-label">Enterprise Value</div><div class="stat-value">$92M</div></div>
+      <div class="card stat-card clickable" data-tip="Base-case projected return" onclick="openDetail('Expected IRR', 'Projected annualized return of 28% under the base-case scenario in Financial Models, over a modeled 6-year hold.', 'DEAL OVERVIEW')"><div class="stat-label">Expected IRR</div><div class="stat-value" style="color:var(--emerald)">28%</div></div>
+      <div class="card stat-card clickable" data-tip="Lani's confidence in this recommendation" onclick="openDetail('Confidence', 'Lani\\'s confidence score reflects data completeness and consistency across the data room — 95% reflects strong document coverage with only 3 minor open items.', 'DEAL OVERVIEW')"><div class="stat-label">Confidence</div><div class="stat-value">95%</div></div>
     </div>
 
     <div class="two-col" style="margin-bottom:16px;">
@@ -792,7 +826,7 @@ function renderPortfolio() {
       <div class="view-desc">Once invested, Lani keeps every position current — board cadence, covenants, and exit readiness.</div>
     </div>
     <div class="grid grid-6" style="margin-bottom:18px;">
-      ${FUND_STATS.map(s=>`<div class="card stat-card"><div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div></div>`).join("")}
+      ${FUND_STATS.map(s=>`<div class="card stat-card clickable" data-tip="${esc(s.detail)}" onclick="openDetail('${esc(s.label)}', '${esc(s.detail)}', 'FUND METRIC')"><div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div></div>`).join("")}
     </div>
     <div class="two-col" style="margin-bottom:16px;">
       <div class="card">
@@ -834,10 +868,14 @@ function renderPortfolio() {
 }
 afterRenderHooks.portfolio = () => {
   const ctx = document.getElementById("chart-fundgrowth");
+  const growthYears = ["2021","2022","2023","2024","2025","2026"];
+  const growthData = [120,148,172,198,222,268];
   activeChartInstances.push(new Chart(ctx, {
     type:"line",
-    data:{ labels:["2021","2022","2023","2024","2025","2026"], datasets:[{ data:[120,148,172,198,222,268], borderColor:getCssVar('--emerald'), backgroundColor:"rgba(47,223,160,.08)", fill:true, tension:.35, pointRadius:0, borderWidth:2 }]},
-    options:{ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }
+    data:{ labels:growthYears, datasets:[{ data:growthData, borderColor:getCssVar('--emerald'), backgroundColor:"rgba(47,223,160,.08)", fill:true, tension:.35, pointRadius:0, pointHoverRadius:6, borderWidth:2 }]},
+    options: withChartInteractivity({ plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:{color:"#1A212C"}}} }, (el) => {
+      openDetail(`${growthYears[el.index]} Fund Value`, `Fund NAV stood at $${growthData[el.index]}M at the end of ${growthYears[el.index]}.`, "FUND VALUE GROWTH");
+    })
   }));
 };
 
@@ -849,10 +887,10 @@ function renderFundAdmin() {
       <div class="view-desc">Lani assists with the operational backbone of the fund alongside due diligence.</div>
     </div>
     <div class="grid grid-4" style="margin-bottom:16px;">
-      <div class="card stat-card"><div class="stat-label">Capital Calls (YTD)</div><div class="stat-value">$18.2M</div></div>
-      <div class="card stat-card"><div class="stat-label">Distributions (YTD)</div><div class="stat-value">$9.6M</div></div>
-      <div class="card stat-card"><div class="stat-label">NAV</div><div class="stat-value">$268M</div></div>
-      <div class="card stat-card"><div class="stat-label">Fund Expenses (QTD)</div><div class="stat-value">$410K</div></div>
+      <div class="card stat-card clickable" data-tip="Total capital called from LPs this year" onclick="openDetail('Capital Calls (YTD)', '$18.2M called from limited partners so far this year, primarily to fund the GreenTech Solar and AgroChain Ghana positions.', 'FUND ADMINISTRATION')"><div class="stat-label">Capital Calls (YTD)</div><div class="stat-value">$18.2M</div></div>
+      <div class="card stat-card clickable" data-tip="Total returned to LPs this year" onclick="openDetail('Distributions (YTD)', '$9.6M distributed to limited partners so far this year across return-of-capital and realized-gain distributions.', 'FUND ADMINISTRATION')"><div class="stat-label">Distributions (YTD)</div><div class="stat-value">$9.6M</div></div>
+      <div class="card stat-card clickable" data-tip="Net Asset Value of the fund" onclick="openDetail('NAV', 'Net Asset Value of $268M across all active portfolio positions, reconciled at quarter-end with no variances found.', 'FUND ADMINISTRATION')"><div class="stat-label">NAV</div><div class="stat-value">$268M</div></div>
+      <div class="card stat-card clickable" data-tip="Fund operating expenses this quarter" onclick="openDetail('Fund Expenses (QTD)', '$410K in fund operating expenses this quarter, covering administration, audit, and legal costs.', 'FUND ADMINISTRATION')"><div class="stat-label">Fund Expenses (QTD)</div><div class="stat-value">$410K</div></div>
     </div>
     <div class="two-col">
       <div class="card">
@@ -884,10 +922,10 @@ function renderInvestors() {
       <div class="view-desc">Preview of what each LP sees when they log in.</div>
     </div>
     <div class="grid grid-4" style="margin-bottom:16px;">
-      <div class="card stat-card"><div class="stat-label">Capital Account Balance</div><div class="stat-value">$28.4M</div></div>
-      <div class="card stat-card"><div class="stat-label">Net IRR to LP</div><div class="stat-value" style="color:var(--emerald)">21.6%</div></div>
-      <div class="card stat-card"><div class="stat-label">DPI</div><div class="stat-value">0.9x</div></div>
-      <div class="card stat-card"><div class="stat-label">TVPI</div><div class="stat-value">1.8x</div></div>
+      <div class="card stat-card clickable" data-tip="This LP's current capital account balance" onclick="openDetail('Capital Account Balance', 'This limited partner\\'s current capital account balance is $28.4M, reflecting contributed capital plus allocated gains, net of distributions.', 'INVESTOR PORTAL')"><div class="stat-label">Capital Account Balance</div><div class="stat-value">$28.4M</div></div>
+      <div class="card stat-card clickable" data-tip="Annualized return net of fees and carry" onclick="openDetail('Net IRR to LP', 'This LP\\'s net annualized return after fund fees and carried interest is 21.6%, since the fund\\'s inception.', 'INVESTOR PORTAL')"><div class="stat-label">Net IRR to LP</div><div class="stat-value" style="color:var(--emerald)">21.6%</div></div>
+      <div class="card stat-card clickable" data-tip="Distributions to Paid-In capital" onclick="openDetail('DPI', 'Distributions to Paid-In capital of 0.9x — for every dollar called, this LP has received $0.90 back in distributions so far.', 'INVESTOR PORTAL')"><div class="stat-label">DPI</div><div class="stat-value">0.9x</div></div>
+      <div class="card stat-card clickable" data-tip="Total Value to Paid-In capital" onclick="openDetail('TVPI', 'Total Value to Paid-In capital of 1.8x — combining distributions received and the current value of remaining holdings, relative to capital called.', 'INVESTOR PORTAL')"><div class="stat-label">TVPI</div><div class="stat-value">1.8x</div></div>
     </div>
     <div class="two-col">
       <div class="card">
@@ -1017,7 +1055,7 @@ function askCopilot(q) {
 }
 function initCopilot() {
   renderCopilotQuick();
-  pushMsg("ai", "Hi David — I'm Lani AI. I've finished reviewing the GreenTech Solar data room. Overall score: 87/100, recommendation: Invest. Ask me anything, or tap a suggestion below.");
+  pushMsg("ai", "Hi Fadl — I'm Lani AI. I've finished reviewing the GreenTech Solar data room. Overall score: 87/100, recommendation: Invest. Ask me anything, or tap a suggestion below.");
   document.getElementById("copilot-toggle").addEventListener("click", () => {
     document.getElementById("copilot-panel").classList.toggle("open");
   });
@@ -1066,6 +1104,7 @@ function setTheme(id) {
   localStorage.setItem("pe-theme", id);
   buildThemeSwitcher("theme-switcher");
   buildThemeSwitcher("theme-switcher-settings");
+  buildThemeSwitcher("theme-switcher-sidebar");
   showToast(`Switched to ${THEMES.find(t=>t.id===id).name} theme.`);
   // redraw charts so colors follow the new theme
   setTimeout(() => render(), 50);
@@ -1074,6 +1113,7 @@ function initTheme() {
   const saved = localStorage.getItem("pe-theme") || "obsidian";
   document.documentElement.setAttribute("data-theme", saved === "obsidian" ? "" : saved);
   buildThemeSwitcher("theme-switcher");
+  buildThemeSwitcher("theme-switcher-sidebar");
 }
 
 // ---------- COMMAND PALETTE ----------
