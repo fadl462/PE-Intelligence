@@ -170,7 +170,7 @@ button{font-family:inherit; cursor:pointer;}
 .sidebar-footer{
   margin-top:auto; padding-top:14px; border-top:1px solid var(--border-soft);
 }
-.sidebar-theme-row{display:flex; align-items:center; justify-content:space-between; padding:2px 8px 12px;}
+.sidebar-theme-row{display:none; align-items:center; justify-content:space-between; padding:2px 8px 12px;}
 .sidebar-theme-label{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; font-weight:600;}
 .security-strip{
   display:flex; flex-wrap:wrap; gap:5px; padding:10px 8px 4px;
@@ -401,6 +401,21 @@ input[type=range]::-webkit-slider-thumb{
   font-size:11px; font-weight:600; color:var(--text-dim); padding:10px; flex-shrink:0;
 }
 .deck-thumb b{display:block; font-size:16px; color:var(--emerald); margin-bottom:4px;}
+.deck-thumb.active{border-color:var(--emerald-line); background:var(--emerald-dim); color:var(--text);}
+
+/* ---------- SLIDE PREVIEW ROLLOUT (Committee Deck) ---------- */
+.slide-preview{
+  max-height:0; opacity:0; overflow:hidden; margin-top:0;
+  transition:max-height .45s cubic-bezier(.22,.8,.24,1), opacity .3s ease .05s, margin-top .45s cubic-bezier(.22,.8,.24,1);
+}
+.slide-preview.open{ max-height:260px; opacity:1; margin-top:16px; }
+.slide-preview-inner{
+  padding:18px 20px; border-radius:var(--radius); border:1px solid var(--emerald-line);
+  background:var(--emerald-dim);
+}
+.slide-preview-eyebrow{font-size:10.5px; font-weight:700; color:var(--emerald); letter-spacing:.08em; margin-bottom:8px;}
+.slide-preview-title{font-size:16px; font-weight:800; margin-bottom:8px;}
+.slide-preview-body{font-size:13px; color:var(--text-dim); line-height:1.65;}
 
 /* Workflow diagram */
 .flow{display:flex; align-items:center; flex-wrap:wrap; gap:6px;}
@@ -633,6 +648,7 @@ input[type=range]::-webkit-slider-thumb{
   .search-fake{ width:auto; flex:1; min-width:0; }
   .search-fake span:not(.kbd){ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .topbar-theme-switcher{ display:none; }
+  .sidebar-theme-row{ display:flex; }
 }
 @media (max-width:760px){
   #main{ padding:16px 14px 90px; }

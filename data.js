@@ -287,7 +287,17 @@ const MEMO_SECTIONS = [
   { name: "Appendices", preview: "Full data room index, model outputs, and comparable transaction detail." },
 ];
 
-const IC_SLIDES = ["Executive Summary", "Investment Highlights", "Financial Analysis", "Risk Matrix", "Competitive Position", "Management", "Scenario Analysis", "Recommendation", "Voting Page"];
+const IC_SLIDES = [
+  { name: "Executive Summary", body: "GreenTech Solar — $12M Series C investment at a $92M enterprise value. Overall Lani score: 87/100. Recommendation: Invest, subject to 3 closing conditions." },
+  { name: "Investment Highlights", body: "18% revenue CAGR, expanding EBITDA margins (24% → 32% by FY27E), category-leading utility offtake pipeline, and a management team with a prior successful exit." },
+  { name: "Financial Analysis", body: "Base case: 31% IRR, 3.8x MOIC, $18.4M NPV. Full 3-statement model and scenario sensitivity available in the Financial Models workspace." },
+  { name: "Risk Matrix", body: "Overall risk score 87/100 across 11 categories. One high-severity item (uncapped indemnity clause), four medium items — none deal-breaking." },
+  { name: "Competitive Position", body: "~6% share in a fragmented $48.2B market growing 18.4% annually. Closest peer, SunGrid West Africa, trades at a lower revenue multiple with weaker margins." },
+  { name: "Management", body: "CEO Kwabena Owusu — 12 years in renewable infrastructure, ex-Actis, one prior successful exit. Reputation score 92, execution score 89, leadership risk Low." },
+  { name: "Scenario Analysis", body: "Base case 31% IRR / 3.8x MOIC. Downside case (9% growth, 8x exit) still returns ~14% IRR / 1.9x MOIC — capital-preserving even under stress." },
+  { name: "Recommendation", body: "Proceed to term sheet. Conditions: renew expired insurance, obtain FY2023 tax filings, and negotiate a liability cap on Clause 17.4 before signing." },
+  { name: "Voting Page", body: "Committee vote: Invest (4), Proceed with conditions (1), Decline (0). Quorum met — recommendation carries to term sheet drafting." },
+];
 
 const PORTFOLIO_COMPANIES = [
   { name: "GreenTech Solar", stage: "Series C", irr: "31%", moic: "3.8x", status: "On Track", detail: "Deployed Q2 2026. Next board meeting in 3 weeks." },
