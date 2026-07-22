@@ -96,7 +96,7 @@ function renderDashboard() {
   return `
     <div class="view-header">
       <div class="view-title">Good morning, David.</div>
-      <div class="view-desc">Houn has analyzed 3 new investment opportunities overnight across 1,204 documents.</div>
+      <div class="view-desc">Lani has analyzed 3 new investment opportunities overnight across 1,204 documents.</div>
     </div>
 
     <div class="section-label">Engine Status <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— click an engine to see what it does</span></div>
@@ -130,11 +130,11 @@ function renderDashboard() {
             </div>
           </div>
           <div class="pill ${d.color === 'emerald' ? 'green' : d.color}" style="width:fit-content;">${d.rec}</div>
-          ${d.reasons.length ? `<ul class="deal-reasons">${d.reasons.map(r => `<li>${r}</li>`).join("")}</ul>` : `<div class="deal-reasons">Confidence: ${d.confidence}% · Houn recommends proceeding to term sheet.</div>`}
+          ${d.reasons.length ? `<ul class="deal-reasons">${d.reasons.map(r => `<li>${r}</li>`).join("")}</ul>` : `<div class="deal-reasons">Confidence: ${d.confidence}% · Lani recommends proceeding to term sheet.</div>`}
         </div>`).join("")}
     </div>
 
-    <div class="section-label">Houn Activity Log <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— live feed, click any entry</span></div>
+    <div class="section-label">Lani Activity Log <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— live feed, click any entry</span></div>
     <div class="card" style="margin-bottom:24px;">
       ${HOUN_ACTIVITY_LOG.map(a => `
         <div class="check-row" data-tip="Click to see which engine produced this" onclick="openDetail('${esc(a.tag)}', '${esc(a.text)}', 'HOUN ACTIVITY · ' + '${esc(a.time)}'.toUpperCase())">
@@ -175,7 +175,7 @@ function renderDeals() {
   return `
     <div class="view-header">
       <div class="view-title">Deals &amp; Data Rooms</div>
-      <div class="view-desc">Upload a data room and Houn's Due Diligence Engine takes it from there.</div>
+      <div class="view-desc">Upload a data room and Lani's Due Diligence Engine takes it from there.</div>
     </div>
 
     <div class="section-label">All Deals <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— click a deal to view its data room below</span></div>
@@ -209,28 +209,28 @@ function renderDeals() {
             <button class="btn ghost" data-tip="Connect a Virtual Data Room provider (Intralinks, Datasite…)" onclick="showToast('Virtual Data Room connection is simulated in this prototype.')">Virtual Data Room</button>
           </div>
           <div class="btn-row" style="justify-content:center; margin-top:18px;">
-            <button class="btn primary" id="simulate-upload-btn" data-tip="Watch Houn classify a sample data room">Simulate Upload</button>
+            <button class="btn primary" id="simulate-upload-btn" data-tip="Watch Lani classify a sample data room">Simulate Upload</button>
           </div>
         </div>
 
         <div id="upload-progress-wrap" style="margin-top:20px; display:none;">
-          <div class="working-banner" id="upload-working-banner"><span class="spin"></span> Houn is reading the data room…</div>
+          <div class="working-banner" id="upload-working-banner"><span class="spin"></span> Lani is reading the data room…</div>
           <div style="font-size:12px; color:var(--text-dim); margin-bottom:14px;"><span id="files-found" class="mono"></span> found — organizing by category…</div>
           <div id="progress-rows"></div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title"><span class="dot"></span>Houn Reads</div>
+        <div class="card-title"><span class="dot"></span>Lani Reads</div>
         <div style="display:flex; flex-wrap:wrap; gap:8px;">
-          ${["Financial statements","Contracts","Shareholder agreements","Tax records","Customer contracts","Cap tables","HR files","ESG reports","Legal documents","Intellectual property","Board minutes","Revenue schedules","Financial forecasts"].map(t=>`<span class="pill gray" data-tip="Houn extracts structured data from every ${t.toLowerCase()} document" style="cursor:pointer;" onclick="openDetail('${esc(t)}', 'Houn extracts structured data points from every ${esc(t.toLowerCase())} document it finds, then cross-references them against the rest of the data room for inconsistencies.', 'DOCUMENT TYPE')">${t}</span>`).join("")}
+          ${["Financial statements","Contracts","Shareholder agreements","Tax records","Customer contracts","Cap tables","HR files","ESG reports","Legal documents","Intellectual property","Board minutes","Revenue schedules","Financial forecasts"].map(t=>`<span class="pill gray" data-tip="Lani extracts structured data from every ${t.toLowerCase()} document" style="cursor:pointer;" onclick="openDetail('${esc(t)}', 'Lani extracts structured data points from every ${esc(t.toLowerCase())} document it finds, then cross-references them against the rest of the data room for inconsistencies.', 'DOCUMENT TYPE')">${t}</span>`).join("")}
         </div>
       </div>
     </div>
 
     <div class="section-label">Document Checklist — Due Diligence Engine</div>
     <div class="card">
-      <div style="font-size:12px; color:var(--text-dim); margin-bottom:14px;">Houn automatically performs 200+ checks across the data room. Click any item for its reasoning.</div>
+      <div style="font-size:12px; color:var(--text-dim); margin-bottom:14px;">Lani automatically performs 200+ checks across the data room. Click any item for its reasoning.</div>
       <div id="checklist-wrap">
         ${CHECKLIST.map((c, i) => renderCheckRow(c, i)).join("")}
       </div>
@@ -243,7 +243,7 @@ function renderCheckRow(c, i) {
   const pillMap = { ok: "green", warn: "amber", bad: "red" };
   return `
     <div>
-      <div class="check-row" data-tip="Click for Houn's reasoning" onclick="toggleExplain(${i})">
+      <div class="check-row" data-tip="Click for Lani's reasoning" onclick="toggleExplain(${i})">
         <div class="check-left">
           <div class="check-icon ${c.status}">${iconMap[c.status]}</div>
           <div class="check-name">${c.name}</div>
@@ -251,7 +251,7 @@ function renderCheckRow(c, i) {
         <div class="pill ${pillMap[c.status]}">${c.note}</div>
       </div>
       <div class="check-explain" id="explain-${i}">
-        <b>Houn's finding:</b> ${c.explain}<br><br>
+        <b>Lani's finding:</b> ${c.explain}<br><br>
         <b>Recommendation:</b> ${c.recommendation}<br><br>
         <b>Risk Impact:</b> ${c.severity}
       </div>
@@ -267,7 +267,7 @@ function toggleExplain(i) {
 afterRenderHooks.deals = () => {
   const btn = document.getElementById("simulate-upload-btn");
   btn.addEventListener("click", () => {
-    setHounWorking(true, "Houn is reading the GreenTech Solar data room…");
+    setLaniWorking(true, "Lani is reading the GreenTech Solar data room…");
     const wrap = document.getElementById("upload-progress-wrap");
     wrap.style.display = "block";
     document.getElementById("files-found").textContent = "412 files";
@@ -281,11 +281,11 @@ afterRenderHooks.deals = () => {
     requestAnimationFrame(() => {
       rows.querySelectorAll(".progress-fill").forEach(f => f.style.width = f.dataset.target + "%");
     });
-    showToast("Houn organized 412 files in 11 seconds.");
+    showToast("Lani organized 412 files in 11 seconds.");
     setTimeout(() => {
       const banner = document.getElementById("upload-working-banner");
-      if (banner) banner.innerHTML = `${ICONS.check.replace('stroke-width="2.5"','stroke-width="2.5" style="width:14px;height:14px;color:var(--emerald)"')} Houn finished reading the data room — checklist updated below.`;
-      setHounWorking(false);
+      if (banner) banner.innerHTML = `${ICONS.check.replace('stroke-width="2.5"','stroke-width="2.5" style="width:14px;height:14px;color:var(--emerald)"')} Lani finished reading the data room — checklist updated below.`;
+      setLaniWorking(false);
     }, 1400);
   });
 };
@@ -314,7 +314,7 @@ function renderModels() {
   return `
     <div class="view-header">
       <div class="view-title">Financial Modelling Engine</div>
-      <div class="view-desc">Houn builds a full 3-statement model and LBO structure automatically — every slider updates the return profile live.</div>
+      <div class="view-desc">Lani builds a full 3-statement model and LBO structure automatically — every slider updates the return profile live.</div>
     </div>
     <div class="tabs">
       <div class="tab ${modelTab==='three-statement'?'active':''}" data-tip="Income statement, balance sheet, cash flow" onclick="setModelTab('three-statement')">Three-Statement Model</div>
@@ -338,8 +338,8 @@ function renderModelTabContent() {
 
 function threeStatementHTML() {
   const out = computeModelOutputs(sliderState);
-  const rowTip = (label) => `data-tip="Click for Houn's note on ${esc(label)}"`;
-  const lineNote = (label) => `Houn flags this line automatically if it moves more than 15% quarter-over-quarter. ${label} is currently tracking in line with the model.`;
+  const rowTip = (label) => `data-tip="Click for Lani's note on ${esc(label)}"`;
+  const lineNote = (label) => `Lani flags this line automatically if it moves more than 15% quarter-over-quarter. ${label} is currently tracking in line with the model.`;
   return `
     <div class="two-col">
       <div class="card">
@@ -369,7 +369,7 @@ function threeStatementHTML() {
         <div class="card">
           <div class="card-title"><span class="dot"></span>Live Outputs</div>
           <div class="grid grid-2">
-            <div class="stat-card card tight clickable" data-tip="Internal Rate of Return" onclick="openDetail('IRR', 'The annualized return Houn projects across the hold period, given the current sliders.', 'LIVE OUTPUT')"><div class="stat-label">IRR</div><div class="stat-value" id="out-irr" style="color:var(--emerald)">${out.irr}%</div></div>
+            <div class="stat-card card tight clickable" data-tip="Internal Rate of Return" onclick="openDetail('IRR', 'The annualized return Lani projects across the hold period, given the current sliders.', 'LIVE OUTPUT')"><div class="stat-label">IRR</div><div class="stat-value" id="out-irr" style="color:var(--emerald)">${out.irr}%</div></div>
             <div class="stat-card card tight clickable" data-tip="Multiple on Invested Capital" onclick="openDetail('MOIC', 'How many times the fund gets its invested capital back at exit, before fees and carry.', 'LIVE OUTPUT')"><div class="stat-label">MOIC</div><div class="stat-value" id="out-moic">${out.moic}x</div></div>
             <div class="stat-card card tight clickable" data-tip="Net Present Value" onclick="openDetail('NPV', 'The present value of projected free cash flows and terminal value, discounted at the current interest rate assumption.', 'LIVE OUTPUT')"><div class="stat-label">NPV</div><div class="stat-value" id="out-npv">$${out.npv}M</div></div>
             <div class="stat-card card tight clickable" data-tip="EBITDA as % of revenue" onclick="openDetail('EBITDA Margin', 'Projected EBITDA as a share of revenue by exit year under the current scenario.', 'LIVE OUTPUT')"><div class="stat-label">EBITDA Margin</div><div class="stat-value" id="out-margin">${out.ebitdaMargin}%</div></div>
@@ -414,7 +414,7 @@ function setScenario(s) {
   sliderState = { ...SCENARIO_PRESETS[s] };
   renderModelTabContent();
   drawCashflowChart();
-  showToast(`Houn loaded the ${s} case.`);
+  showToast(`Lani loaded the ${s} case.`);
 }
 
 function wireModelInteractivity() {
@@ -584,7 +584,7 @@ function renderContracts() {
             <span class="pill ${cl.risk==='high'?'red':cl.risk==='medium'?'amber':'green'}">${cl.risk}</span>
           </div>`).join("")}
         <div class="section-label">AI Alert</div>
-        <div class="alert-box clickable-item" data-tip="Click for Houn's negotiation recommendation" onclick="openDetail('${esc(CONTRACT_DETAIL.alert.clause)}', '${esc(CONTRACT_DETAIL.alert.text)} Recommendation: ${esc(CONTRACT_DETAIL.alert.recommendation)}', 'AI ALERT · SEVERITY ' + '${esc(CONTRACT_DETAIL.alert.severity)}')">
+        <div class="alert-box clickable-item" data-tip="Click for Lani's negotiation recommendation" onclick="openDetail('${esc(CONTRACT_DETAIL.alert.clause)}', '${esc(CONTRACT_DETAIL.alert.text)} Recommendation: ${esc(CONTRACT_DETAIL.alert.recommendation)}', 'AI ALERT · SEVERITY ' + '${esc(CONTRACT_DETAIL.alert.severity)}')">
           ${ICONS.alert}
           <div>
             <div style="font-weight:700; font-size:13px; margin-bottom:4px;">${CONTRACT_DETAIL.alert.clause} — Severity: ${CONTRACT_DETAIL.alert.severity}</div>
@@ -603,18 +603,18 @@ function renderMarket() {
   return `
     <div class="view-header">
       <div class="view-title">Market Intelligence</div>
-      <div class="view-desc">Houn cross-references live data across research providers, filings, and news to size the opportunity.</div>
+      <div class="view-desc">Lani cross-references live data across research providers, filings, and news to size the opportunity.</div>
     </div>
 
     <div class="card" style="margin-bottom:16px;">
       <div class="card-title"><span class="dot"></span>Connected Sources <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— click a source</span></div>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">${MARKET.sources.map(s=>`<span class="pill gray" style="cursor:pointer;" data-tip="Houn queries ${esc(s)} for this deal" onclick="openDetail('${esc(s)}', 'Houn pulls market sizing, comparable transactions, and news signal from ${esc(s)} and reconciles it against the other connected sources.', 'DATA SOURCE')">${s}</span>`).join("")}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">${MARKET.sources.map(s=>`<span class="pill gray" style="cursor:pointer;" data-tip="Lani queries ${esc(s)} for this deal" onclick="openDetail('${esc(s)}', 'Lani pulls market sizing, comparable transactions, and news signal from ${esc(s)} and reconciles it against the other connected sources.', 'DATA SOURCE')">${s}</span>`).join("")}</div>
     </div>
 
     <div class="grid grid-4" style="margin-bottom:16px;">
       <div class="card stat-card clickable" data-tip="Total Addressable Market" onclick="openDetail('TAM', 'Total Addressable Market — the full revenue opportunity if GreenTech Solar captured 100% of the renewable energy market it operates in.', 'MARKET SIZING')"><div class="stat-label">TAM</div><div class="stat-value">${MARKET.tam}</div></div>
       <div class="card stat-card clickable" data-tip="Serviceable Addressable Market" onclick="openDetail('SAM', 'Serviceable Addressable Market — the portion of the TAM reachable given GreenTech Solar\\'s current geography and license.', 'MARKET SIZING')"><div class="stat-label">SAM</div><div class="stat-value">${MARKET.sam}</div></div>
-      <div class="card stat-card clickable" data-tip="Serviceable Obtainable Market" onclick="openDetail('SOM', 'Serviceable Obtainable Market — Houn\\'s realistic 3-year capture estimate given the current pipeline and competitive set.', 'MARKET SIZING')"><div class="stat-label">SOM</div><div class="stat-value">${MARKET.som}</div></div>
+      <div class="card stat-card clickable" data-tip="Serviceable Obtainable Market" onclick="openDetail('SOM', 'Serviceable Obtainable Market — Lani\\'s realistic 3-year capture estimate given the current pipeline and competitive set.', 'MARKET SIZING')"><div class="stat-label">SOM</div><div class="stat-value">${MARKET.som}</div></div>
       <div class="card stat-card clickable" data-tip="Industry compound annual growth rate" onclick="openDetail('Industry CAGR', 'Compound annual growth rate of the utility-scale solar market in West Africa, per Bloomberg NEF and Capital IQ estimates.', 'MARKET SIZING')"><div class="stat-label">Industry CAGR</div><div class="stat-value" style="color:var(--emerald)">${MARKET.cagr}</div></div>
     </div>
 
@@ -633,7 +633,7 @@ function renderMarket() {
         <div class="grid grid-2">
           <div class="stat-card card tight clickable" data-tip="Has this founder exited a company before?" onclick="openDetail('Successful Exit', 'Kwabena Owusu previously led the Series B exit of a renewable infrastructure business acquired by a regional utility in 2019.', 'MANAGEMENT')"><div class="stat-label">Successful Exit</div><div class="stat-value" style="font-size:16px; color:var(--emerald)">${MARKET.ceo.exit}</div></div>
           <div class="stat-card card tight clickable" data-tip="Any prior bankruptcy filings?" onclick="openDetail('Prior Bankruptcy', 'No bankruptcy filings found across any entity linked to this founder in public records checks.', 'MANAGEMENT')"><div class="stat-label">Prior Bankruptcy</div><div class="stat-value" style="font-size:16px;">${MARKET.ceo.bankruptcy}</div></div>
-          <div class="stat-card card tight clickable" data-tip="Composite reputation score" onclick="openDetail('Reputation Score', 'Composite score from press sentiment, LinkedIn recommendations, and reference calls conducted by Houn.', 'MANAGEMENT')"><div class="stat-label">Reputation Score</div><div class="stat-value" style="font-size:16px;">${MARKET.ceo.reputation}</div></div>
+          <div class="stat-card card tight clickable" data-tip="Composite reputation score" onclick="openDetail('Reputation Score', 'Composite score from press sentiment, LinkedIn recommendations, and reference calls conducted by Lani.', 'MANAGEMENT')"><div class="stat-label">Reputation Score</div><div class="stat-value" style="font-size:16px;">${MARKET.ceo.reputation}</div></div>
           <div class="stat-card card tight clickable" data-tip="Track record of hitting plan" onclick="openDetail('Execution Score', 'Historical accuracy of this management team\\'s forecasts vs. actuals across prior ventures.', 'MANAGEMENT')"><div class="stat-label">Execution Score</div><div class="stat-value" style="font-size:16px;">${MARKET.ceo.execution}</div></div>
         </div>
         <div class="pill green" style="margin-top:12px; width:fit-content; cursor:pointer;" data-tip="Composite leadership risk rating" onclick="openDetail('Leadership Risk', 'Overall leadership risk is rated Low, driven by a clean legal history and a prior successful exit.', 'MANAGEMENT')">Leadership Risk: ${MARKET.ceo.leadershipRisk}</div>
@@ -678,7 +678,7 @@ function renderRisk() {
     </div>
 
     <div class="two-col" style="margin-bottom:16px;">
-      <div class="card clickable" data-tip="Weighted average across all 11 categories" onclick="openDetail('Overall Investment Score', 'Houn combines all 11 weighted risk categories into a single 0–100 score. 87 corresponds to a clear Invest recommendation under this fund\\'s policy thresholds.', 'RISK ENGINE')" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div class="card clickable" data-tip="Weighted average across all 11 categories" onclick="openDetail('Overall Investment Score', 'Lani combines all 11 weighted risk categories into a single 0–100 score. 87 corresponds to a clear Invest recommendation under this fund\\'s policy thresholds.', 'RISK ENGINE')" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <div class="stat-label">Overall Investment Score</div>
         <div class="mono" style="font-size:52px; font-weight:800; color:var(--emerald); margin:10px 0;">87<span style="font-size:22px; color:var(--text-faint);">/100</span></div>
         <div class="pill green">Recommendation: Invest</div>
@@ -776,11 +776,11 @@ function renderIC() {
   `;
 }
 function simulateExport(kind) {
-  setHounWorking(true, `Houn is generating the ${kind} export…`);
-  showToast(`Houn is generating a ${kind} export of the GreenTech Solar IC memo…`);
+  setLaniWorking(true, `Lani is generating the ${kind} export…`);
+  showToast(`Lani is generating a ${kind} export of the GreenTech Solar IC memo…`);
   setTimeout(()=> {
     showToast(`${kind} export ready — this is a prototype, so downloads aren't wired up yet.`);
-    setHounWorking(false);
+    setLaniWorking(false);
   }, 1800);
 }
 
@@ -789,7 +789,7 @@ function renderPortfolio() {
   return `
     <div class="view-header">
       <div class="view-title">Portfolio Management</div>
-      <div class="view-desc">Once invested, Houn keeps every position current — board cadence, covenants, and exit readiness.</div>
+      <div class="view-desc">Once invested, Lani keeps every position current — board cadence, covenants, and exit readiness.</div>
     </div>
     <div class="grid grid-6" style="margin-bottom:18px;">
       ${FUND_STATS.map(s=>`<div class="card stat-card"><div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div></div>`).join("")}
@@ -846,7 +846,7 @@ function renderFundAdmin() {
   return `
     <div class="view-header">
       <div class="view-title">Fund Administration</div>
-      <div class="view-desc">Houn assists with the operational backbone of the fund alongside due diligence.</div>
+      <div class="view-desc">Lani assists with the operational backbone of the fund alongside due diligence.</div>
     </div>
     <div class="grid grid-4" style="margin-bottom:16px;">
       <div class="card stat-card"><div class="stat-label">Capital Calls (YTD)</div><div class="stat-value">$18.2M</div></div>
@@ -892,7 +892,7 @@ function renderInvestors() {
     <div class="two-col">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Quarterly Letters <span style="text-transform:none; font-weight:400; color:var(--text-faint);">— click to preview</span></div>
-        ${["Q2 2026 Letter","Q1 2026 Letter","Q4 2025 Letter"].map(l=>`<div class="check-row" data-tip="Preview this letter" onclick="openDetail('${esc(l)}', 'Auto-drafted by Houn from the quarter\\'s deal activity, NAV movement, and portfolio updates, then reviewed by the investor relations team before send.', 'QUARTERLY LETTER')"><div class="check-name" style="font-weight:500;">${l}</div><span class="pill gray">PDF</span></div>`).join("")}
+        ${["Q2 2026 Letter","Q1 2026 Letter","Q4 2025 Letter"].map(l=>`<div class="check-row" data-tip="Preview this letter" onclick="openDetail('${esc(l)}', 'Auto-drafted by Lani from the quarter\\'s deal activity, NAV movement, and portfolio updates, then reviewed by the investor relations team before send.', 'QUARTERLY LETTER')"><div class="check-name" style="font-weight:500;">${l}</div><span class="pill gray">PDF</span></div>`).join("")}
         <div class="section-label">Portfolio Updates</div>
         <div class="clickable-item" data-tip="Click to read the full update" onclick="openDetail('Q2 2026 Portfolio Update', 'This quarter, the fund deployed $12M into GreenTech Solar following a full AI-assisted due diligence cycle completed in 11 minutes of review time. NAV rose to $268M, up from $245M last quarter, driven by markups at GreenTech Solar and Nova Freightlink.', 'PORTFOLIO UPDATE')" style="font-size:12.5px; color:var(--text-dim); line-height:1.7; cursor:pointer;">"This quarter, the fund deployed $12M into GreenTech Solar following a full AI-assisted due diligence cycle completed in 11 minutes of review time..."</div>
       </div>
@@ -927,13 +927,13 @@ function renderSettings() {
     <div class="grid grid-2" style="margin-bottom:16px;">
       <div class="card">
         <div class="card-title"><span class="dot"></span>Deployment</div>
-        <div class="check-row" data-tip="Deploy Houn inside your own VPC" onclick="openDetail('Private LLM Deployment', 'Houn can run entirely inside your own VPC — deal data never leaves your environment, and no data is used to train shared models.', 'DEPLOYMENT')"><div class="check-name" style="font-weight:500;">Private LLM Deployment</div><span class="pill green">Enabled</span></div>
-        <div class="check-row" data-tip="Fully air-gapped option" onclick="openDetail('Offline Deployment Option', 'For the most sensitive mandates, Houn can run fully air-gapped with no external network calls.', 'DEPLOYMENT')"><div class="check-name" style="font-weight:500;">Offline Deployment Option</div><span class="pill gray">Available</span></div>
+        <div class="check-row" data-tip="Deploy Lani inside your own VPC" onclick="openDetail('Private LLM Deployment', 'Lani can run entirely inside your own VPC — deal data never leaves your environment, and no data is used to train shared models.', 'DEPLOYMENT')"><div class="check-name" style="font-weight:500;">Private LLM Deployment</div><span class="pill green">Enabled</span></div>
+        <div class="check-row" data-tip="Fully air-gapped option" onclick="openDetail('Offline Deployment Option', 'For the most sensitive mandates, Lani can run fully air-gapped with no external network calls.', 'DEPLOYMENT')"><div class="check-name" style="font-weight:500;">Offline Deployment Option</div><span class="pill gray">Available</span></div>
       </div>
       <div class="card">
         <div class="card-title"><span class="dot"></span>Access</div>
         <div class="check-row" data-tip="Analysts, partners, and LPs each see only what they should" onclick="openDetail('Role-Based Permissions', 'Analysts, partners, and LPs each see only the screens and data appropriate to their role.', 'ACCESS')"><div class="check-name" style="font-weight:500;">Role-Based Permissions</div><span class="pill green">Configured</span></div>
-        <div class="check-row" data-tip="How long audit logs are kept" onclick="openDetail('Audit Log Retention', 'Every document view and Houn action is logged and retained for 7 years, matching standard fund audit requirements.', 'ACCESS')"><div class="check-name" style="font-weight:500;">Audit Log Retention</div><span class="pill green">7 years</span></div>
+        <div class="check-row" data-tip="How long audit logs are kept" onclick="openDetail('Audit Log Retention', 'Every document view and Lani action is logged and retained for 7 years, matching standard fund audit requirements.', 'ACCESS')"><div class="check-name" style="font-weight:500;">Audit Log Retention</div><span class="pill green">7 years</span></div>
       </div>
     </div>
     <div class="card">
@@ -947,7 +947,7 @@ function renderSettings() {
 afterRenderHooks.settings = () => { buildThemeSwitcher("theme-switcher-settings"); };
 
 // ---------- HOUN: WORKING INDICATOR ----------
-function setHounWorking(isWorking, tickerText) {
+function setLaniWorking(isWorking, tickerText) {
   const ring = document.getElementById("houn-toggle-pulse");
   const tickerEl = document.getElementById("houn-ticker-text");
   if (ring) ring.classList.toggle("thinking", isWorking);
@@ -955,12 +955,12 @@ function setHounWorking(isWorking, tickerText) {
     clearInterval(window.__hounTickerInterval);
     tickerEl.textContent = tickerText;
   } else if (!isWorking) {
-    startHounTicker();
+    startLaniTicker();
   }
 }
 
 let hounTickerIndex = 0;
-function startHounTicker() {
+function startLaniTicker() {
   clearInterval(window.__hounTickerInterval);
   const el = document.getElementById("houn-ticker-text");
   if (!el) return;
@@ -1004,7 +1004,7 @@ function pushTyping() {
 }
 function askCopilot(q) {
   pushMsg("user", q);
-  setHounWorking(true, "Houn is thinking…");
+  setLaniWorking(true, "Lani is thinking…");
   document.getElementById("houn-status-line").textContent = "Thinking…";
   pushTyping();
   setTimeout(() => {
@@ -1012,12 +1012,12 @@ function askCopilot(q) {
     if (typing) typing.remove();
     pushMsg("ai", COPILOT_RESPONSES[q] || "Noted — in the full deployment, I'd pull the relevant documents and data room context to answer precisely. For this prototype, try one of the suggested prompts below.");
     document.getElementById("houn-status-line").textContent = "Grounded in the open deal · GreenTech Solar";
-    setHounWorking(false);
+    setLaniWorking(false);
   }, 1100);
 }
 function initCopilot() {
   renderCopilotQuick();
-  pushMsg("ai", "Hi David — I'm Houn. I've finished reviewing the GreenTech Solar data room. Overall score: 87/100, recommendation: Invest. Ask me anything, or tap a suggestion below.");
+  pushMsg("ai", "Hi David — I'm Lani AI. I've finished reviewing the GreenTech Solar data room. Overall score: 87/100, recommendation: Invest. Ask me anything, or tap a suggestion below.");
   document.getElementById("copilot-toggle").addEventListener("click", () => {
     document.getElementById("copilot-panel").classList.toggle("open");
   });
@@ -1039,7 +1039,7 @@ function buildNotifBell() {
   btn.innerHTML = ICONS.bell;
   const dd = document.getElementById("notif-dropdown");
   dd.innerHTML = `
-    <div class="notif-head">Houn Alerts (${NOTIFICATIONS.length})</div>
+    <div class="notif-head">Lani Alerts (${NOTIFICATIONS.length})</div>
     ${NOTIFICATIONS.map(n => `
       <div class="notif-item" onclick="handleNotifClick('${n.view}')">
         <div class="notif-title"><span class="notif-dot" style="background:${severityColor(n.severity)}"></span>${n.title}</div>
@@ -1107,6 +1107,22 @@ function initDetailModal() {
   document.getElementById("detail-overlay").addEventListener("click", (e) => { if (e.target.id === "detail-overlay") closeDetail(); });
 }
 
+// ---------- MOBILE SIDEBAR ----------
+function initMobileSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebar-backdrop");
+  const hamburger = document.getElementById("hamburger-btn");
+  hamburger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>`;
+  function openSidebar() { sidebar.classList.add("open"); backdrop.classList.add("open"); }
+  function closeSidebar() { sidebar.classList.remove("open"); backdrop.classList.remove("open"); }
+  hamburger.addEventListener("click", () => {
+    sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+  });
+  backdrop.addEventListener("click", closeSidebar);
+  // close the drawer automatically after picking a nav item on mobile
+  document.querySelectorAll(".nav-item").forEach(el => el.addEventListener("click", closeSidebar));
+}
+
 // ---------- INIT ----------
 initTheme();
 buildSidebarNav();
@@ -1115,4 +1131,5 @@ initCopilot();
 initCmdk();
 initDetailModal();
 buildNotifBell();
-startHounTicker();
+startLaniTicker();
+initMobileSidebar();

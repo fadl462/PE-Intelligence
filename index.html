@@ -26,6 +26,8 @@
   --red:#F0565C;
   --red-dim:rgba(240,86,92,.12);
   --blue:#5B8DEF;
+  --emerald-dark:#1a9c74;
+  --topbar-bg:rgba(10,13,18,.7);
   --radius:14px;
   --radius-sm:9px;
   --font-ui:'Inter',system-ui,sans-serif;
@@ -34,23 +36,31 @@
 }
 /* ---- THEME: MIDNIGHT (deep navy, cyan signal) ---- */
 [data-theme="midnight"]{
-  --bg:#060B16;
-  --bg-1:#0A1120;
-  --bg-2:#0E1729;
-  --bg-3:#142038;
-  --border:#1E2C48;
-  --border-soft:#141F36;
+  --bg:#050914;
+  --bg-1:#0A1226;
+  --bg-2:#0F1B36;
+  --bg-3:#152547;
+  --border:#22355C;
+  --border-soft:#16233F;
   --text:#E7EDF6;
   --text-dim:#8996B3;
   --text-faint:#4F5C79;
   --emerald:#3FD8E8;
-  --emerald-dim:rgba(63,216,232,.12);
-  --emerald-line:rgba(63,216,232,.35);
+  --emerald-dim:rgba(63,216,232,.14);
+  --emerald-line:rgba(63,216,232,.4);
+  --emerald-dark:#1690a0;
   --amber:#F0A93F;
   --amber-dim:rgba(240,169,63,.12);
   --red:#F0565C;
   --red-dim:rgba(240,86,92,.12);
   --blue:#8DA5F5;
+  --topbar-bg:rgba(5,9,20,.72);
+}
+[data-theme="midnight"] body{
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(63,216,232,.07), transparent 60%),
+    radial-gradient(900px 500px at 0% 100%, rgba(141,165,245,.06), transparent 60%),
+    var(--bg);
 }
 /* ---- THEME: IVORY (light, client-facing) ---- */
 [data-theme="ivory"]{
@@ -71,6 +81,8 @@
   --red:#D6373F;
   --red-dim:rgba(214,55,63,.10);
   --blue:#3D6FD1;
+  --emerald-dark:#0b7d59;
+  --topbar-bg:rgba(255,255,255,.78);
   --shadow-lg:0 20px 50px -25px rgba(23,27,34,.25);
 }
 [data-theme="ivory"] body{
@@ -83,7 +95,7 @@
 [data-theme="ivory"] input[type=range]::-webkit-slider-thumb{ border-color:#fff; }
 [data-theme="ivory"] ::-webkit-scrollbar-thumb{ background:#D9DEE5; }
 *{box-sizing:border-box; margin:0; padding:0;}
-html,body{height:100%;}
+html,body{height:100%; overflow-x:hidden;}
 body{
   background:
     radial-gradient(1200px 600px at 85% -10%, rgba(47,223,160,.05), transparent 60%),
@@ -126,7 +138,7 @@ button{font-family:inherit; cursor:pointer;}
 }
 .brand-mark{
   width:30px; height:30px; border-radius:8px;
-  background:linear-gradient(135deg, var(--emerald), #1a9c74);
+  background:linear-gradient(135deg, var(--emerald), var(--emerald-dark));
   display:flex; align-items:center; justify-content:center;
   font-weight:800; font-size:13px; color:#06110D; flex-shrink:0;
 }
@@ -182,7 +194,7 @@ button{font-family:inherit; cursor:pointer;}
   grid-row:1; grid-column:2;
   display:flex; align-items:center; gap:16px;
   padding:0 22px; border-bottom:1px solid var(--border-soft);
-  background:rgba(10,13,18,.7); backdrop-filter:blur(10px);
+  background:var(--topbar-bg); backdrop-filter:blur(10px);
 }
 .topbar-title{font-weight:700; font-size:15px;}
 .topbar-crumb{font-size:11.5px; color:var(--text-faint); font-family:var(--font-mono);}
@@ -284,7 +296,7 @@ button{font-family:inherit; cursor:pointer;}
   transition:all .15s;
 }
 .btn:hover{border-color:var(--emerald-line); color:var(--emerald);}
-.btn.primary{background:linear-gradient(135deg, var(--emerald), #1a9c74); color:#06170F; border:none;}
+.btn.primary{background:linear-gradient(135deg, var(--emerald), var(--emerald-dark)); color:#06170F; border:none;}
 .btn.primary:hover{filter:brightness(1.08); color:#06170F;}
 .btn.ghost{background:transparent;}
 .btn svg{width:14px; height:14px;}
@@ -309,7 +321,7 @@ tr.clickable:hover td{background:var(--bg-2);}
 .progress-row{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
 .progress-label{width:150px; font-size:12px; color:var(--text-dim); flex-shrink:0;}
 .progress-track{flex:1; height:7px; background:var(--bg-3); border-radius:20px; overflow:hidden;}
-.progress-fill{height:100%; background:linear-gradient(90deg, var(--emerald), #1a9c74); border-radius:20px; transition:width 1.2s cubic-bezier(.2,.8,.2,1);}
+.progress-fill{height:100%; background:linear-gradient(90deg, var(--emerald), var(--emerald-dark)); border-radius:20px; transition:width 1.2s cubic-bezier(.2,.8,.2,1);}
 .progress-pct{width:36px; text-align:right; font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
 
 /* Checklist */
@@ -399,7 +411,7 @@ input[type=range]::-webkit-slider-thumb{
 #copilot-toggle{
   position:fixed; right:26px; bottom:26px; z-index:40;
   width:52px; height:52px; border-radius:16px; border:none;
-  background:linear-gradient(135deg, var(--emerald), #1a9c74);
+  background:linear-gradient(135deg, var(--emerald), var(--emerald-dark));
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 12px 30px -8px rgba(47,223,160,.5);
 }
@@ -579,6 +591,62 @@ input[type=range]::-webkit-slider-thumb{
   animation:spin .7s linear infinite; flex-shrink:0;
 }
 @keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- HAMBURGER (mobile sidebar toggle) ---------- */
+#hamburger-btn{
+  display:none; width:34px; height:34px; border-radius:8px; border:1px solid var(--border-soft);
+  background:var(--bg-2); color:var(--text-dim); align-items:center; justify-content:center; flex-shrink:0; margin-right:6px;
+}
+#hamburger-btn svg{width:17px; height:17px;}
+#sidebar-backdrop{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:35;
+}
+#sidebar-backdrop.open{display:block;}
+
+/* ---------- RESPONSIVE / MOBILE ---------- */
+@media (max-width:960px){
+  #app{ grid-template-columns:1fr; }
+  #sidebar{
+    position:fixed; top:0; left:0; bottom:0; z-index:45; width:250px; max-width:85vw;
+    transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.5);
+  }
+  #sidebar.open{ transform:translateX(0); }
+  #topbar{ grid-column:1; }
+  #main{ grid-column:1; }
+  #hamburger-btn{ display:flex; }
+  .houn-ticker{ display:none; }
+  .search-fake{ width:auto; flex:1; min-width:0; }
+  .search-fake span:not(.kbd){ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .theme-switcher{ display:none; }
+}
+@media (max-width:760px){
+  #main{ padding:16px 14px 90px; }
+  #topbar{ padding:0 14px; gap:10px; }
+  .view-title{ font-size:18px; }
+  .grid-6, .grid-4, .grid-3, .grid-2{ grid-template-columns:1fr 1fr; }
+  .two-col{ grid-template-columns:1fr; }
+  .kbd{ display:none; }
+  .search-fake{ font-size:11.5px; padding:7px 9px; }
+  #copilot-panel{
+    left:14px; right:14px; width:auto; bottom:82px; height:min(520px, 70vh);
+  }
+  #copilot-toggle{ right:16px; bottom:16px; }
+  .deal-card, .card{ padding:14px; }
+  #detail-box{ width:100%; }
+  table{ font-size:11.5px; }
+  th, td{ padding:8px 6px; }
+}
+@media (max-width:480px){
+  .grid-6, .grid-4, .grid-3, .grid-2{ grid-template-columns:1fr 1fr; }
+  .stat-value{ font-size:19px; }
+  .brand-sub{ display:none; }
+  .user-role{ display:none; }
+  #topbar-crumb{ display:none; }
+  .btn-row{ gap:6px; }
+  .btn{ padding:8px 11px; font-size:11.5px; }
+  .engine-row{ gap:6px; }
+  .engine-chip{ font-size:11px; padding:5px 9px 5px 7px; }
+}
 </style>
 </head>
 <body>
@@ -625,14 +693,17 @@ input[type=range]::-webkit-slider-thumb{
 
   <!-- TOPBAR -->
   <div id="topbar">
+    <button id="hamburger-btn" data-tip="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
     <div>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div class="topbar-crumb" id="topbar-crumb">workspace / dashboard</div>
     </div>
 
-    <div class="houn-ticker" id="houn-ticker" data-tip="Houn works continuously in the background across every open deal">
+    <div class="houn-ticker" id="houn-ticker" data-tip="Lani works continuously in the background across every open deal">
       <span class="houn-ticker-dot"></span>
-      <span class="houn-ticker-text" id="houn-ticker-text">Houn is active…</span>
+      <span class="houn-ticker-text" id="houn-ticker-text">Lani is active…</span>
     </div>
 
     <div class="search-fake" id="open-cmdk" data-tip="Jump to any screen instantly">
@@ -644,17 +715,18 @@ input[type=range]::-webkit-slider-thumb{
     <div class="theme-switcher" id="theme-switcher"></div>
 
     <div style="position:relative;">
-      <div class="topbar-icon-btn" id="notif-btn" data-tip="Notifications from Houn"></div>
+      <div class="topbar-icon-btn" id="notif-btn" data-tip="Notifications from Lani"></div>
       <div id="notif-dropdown"></div>
     </div>
   </div>
 
   <!-- MAIN -->
+  <div id="sidebar-backdrop"></div>
   <div id="main"></div>
 </div>
 
 <!-- HOUN AI ASSISTANT -->
-<button id="copilot-toggle" title="Ask Houn" data-tip="Ask Houn — your AI investment analyst">
+<button id="copilot-toggle" title="Ask Lani" data-tip="Ask Lani — your AI investment analyst">
   <span id="houn-toggle-pulse" class="houn-pulse-ring"></span>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 0-5 5v2a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5Z"/><path d="M8 12v1a4 4 0 0 0 8 0v-1"/><path d="M12 17v4M9 21h6"/></svg>
 </button>
@@ -665,14 +737,14 @@ input[type=range]::-webkit-slider-thumb{
       🐕
     </div>
     <div>
-      <b>Houn</b>
+      <b>Lani AI</b>
       <div id="houn-status-line" style="font-size:10.5px;color:var(--text-faint);">Grounded in the open deal · GreenTech Solar</div>
     </div>
   </div>
   <div class="copilot-body" id="copilot-body"></div>
   <div class="copilot-quick" id="copilot-quick"></div>
   <div class="copilot-input">
-    <input id="copilot-input-field" placeholder="Ask Houn anything about this deal…" />
+    <input id="copilot-input-field" placeholder="Ask Lani anything about this deal…" />
     <button id="copilot-send">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06170F" stroke-width="2.4"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4Z"/></svg>
     </button>
@@ -687,7 +759,7 @@ input[type=range]::-webkit-slider-thumb{
         <div id="detail-eyebrow">HOUN INSIGHT</div>
         <div id="detail-title">Title</div>
       </div>
-      <button id="detail-close">${'' }<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button id="detail-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div id="detail-body">Body</div>
   </div>

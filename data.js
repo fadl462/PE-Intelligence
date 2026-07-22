@@ -40,14 +40,14 @@ const THEMES = [
 
 // ---------------- HOUN ACTIVITY (live ticker + activity log) ----------------
 const HOUN_TICKER = [
-  "Houn is re-scoring GreenTech Solar against the latest cap table…",
-  "Houn is cross-referencing Fintech Africa's customer contracts…",
-  "Houn is drafting the ESG section of the Medical Robotics memo…",
-  "Houn is pulling comparable transactions from Capital IQ…",
-  "Houn is checking Nova Freightlink's insurance certificates…",
-  "Houn is reconciling AgroChain Ghana's EBITDA add-backs…",
-  "Houn is updating the risk heat map for 3 open deals…",
-  "Houn is watching for covenant breaches across the portfolio…",
+  "Lani is re-scoring GreenTech Solar against the latest cap table…",
+  "Lani is cross-referencing Fintech Africa's customer contracts…",
+  "Lani is drafting the ESG section of the Medical Robotics memo…",
+  "Lani is pulling comparable transactions from Capital IQ…",
+  "Lani is checking Nova Freightlink's insurance certificates…",
+  "Lani is reconciling AgroChain Ghana's EBITDA add-backs…",
+  "Lani is updating the risk heat map for 3 open deals…",
+  "Lani is watching for covenant breaches across the portfolio…",
 ];
 
 const HOUN_ACTIVITY_LOG = [
@@ -104,11 +104,11 @@ const DEALS = [
 ];
 
 const ACTIVITY = [
-  { label: "Deals Reviewed", value: "17", delta: "+4 this week", view: "deals", tip: "See every deal Houn has reviewed" },
+  { label: "Deals Reviewed", value: "17", delta: "+4 this week", view: "deals", tip: "See every deal Lani has reviewed" },
   { label: "Documents Analyzed", value: "1,204", delta: "+112 today", view: "deals", tip: "See the data rooms behind this number" },
   { label: "Contracts Reviewed", value: "52", delta: "+6 today", view: "contracts", tip: "Open Contract Intelligence" },
   { label: "Memos Generated", value: "17", delta: "100% on-time", view: "ic", tip: "Open the Investment Committee workspace" },
-  { label: "Avg. Review Time", value: "11 min", delta: "vs 6.5 days manual", view: "risk", tip: "See how Houn scores every deal this fast" },
+  { label: "Avg. Review Time", value: "11 min", delta: "vs 6.5 days manual", view: "risk", tip: "See how Lani scores every deal this fast" },
   { label: "Risks Detected", value: "63", delta: "9 high severity", view: "risk", tip: "Open the Risk Engine" },
 ];
 
@@ -146,7 +146,7 @@ const CHECKLIST = [
   { name: "Financial Statements", status: "ok", note: "Complete", explain: "3 years of audited statements reconcile cleanly with management accounts and the bank confirmation letter.", recommendation: "No action needed.", severity: "None" },
   {
     name: "Tax Returns", status: "bad", note: "Missing FY2023", severity: "Medium",
-    explain: "Absence of the latest tax filings increases uncertainty around reported EBITDA. Houn cross-checked available filings against management accounts and found no FY2023 return on file.",
+    explain: "Absence of the latest tax filings increases uncertainty around reported EBITDA. Lani cross-checked available filings against management accounts and found no FY2023 return on file.",
     recommendation: "Request FY2023 tax filings before proceeding to term sheet."
   },
   { name: "Customer Contracts", status: "ok", note: "Complete", explain: "All 14 top-20 customer contracts are on file and auto-renewal clauses have been mapped against the revenue forecast.", recommendation: "No action needed.", severity: "None" },
@@ -266,7 +266,7 @@ const ESG = {
   environmental: 82, social: 91, governance: 74, overall: 82,
   flags: [
     { name: "Board diversity", status: "Positive", detail: "3 of 7 board seats held by women; exceeds fund policy minimum." },
-    { name: "Environmental compliance filing", status: "Pending", detail: "Annual EPA filing is overdue by 6 weeks — Houn has queued a reminder." },
+    { name: "Environmental compliance filing", status: "Pending", detail: "Annual EPA filing is overdue by 6 weeks — Lani has queued a reminder." },
   ]
 };
 
