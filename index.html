@@ -531,6 +531,14 @@ input[type=range]::-webkit-slider-thumb{
   opacity:0; visibility:hidden; pointer-events:none; z-index:80; transition:opacity .15s ease;
 }
 [data-tip]:hover::after, [data-tip]:hover::before{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
+/* CRITICAL: pseudo-element content on table-row/table-structural elements forces
+   browsers to generate an invisible anonymous table-cell to hold it, which corrupts
+   the table's column count/alignment. Table rows get a native title-attribute
+   tooltip instead (see .clickable tr / tr.clickable handling in JS). */
+tr[data-tip]::before, tr[data-tip]::after,
+table[data-tip]::before, table[data-tip]::after,
+thead[data-tip]::before, thead[data-tip]::after,
+tbody[data-tip]::before, tbody[data-tip]::after{ content:none !important; }
 .clickable-item, .card.clickable, .deal-card, .check-row, .engine-chip, tr.clickable,
 .deck-thumb, .sec-pill, .stat-card.clickable{cursor:pointer;}
 .card.clickable, .stat-card.clickable{transition:border-color .15s, transform .15s, background .15s;}

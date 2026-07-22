@@ -244,6 +244,8 @@ const MARKET = {
     { name: "SunGrid West Africa / Series C", ev: "$68M", multiple: "3.4x rev", tip: "Closest peer by geography and stage" },
     { name: "Helios Power / Series B", ev: "$41M", multiple: "3.1x rev", tip: "Earlier stage, lower margin profile" },
     { name: "M-KOPA Solar / Growth round", ev: "$210M", multiple: "4.0x rev", tip: "Aspirational comp — pan-African scale" },
+    { name: "Yellow Solar Ghana / Series B", ev: "$29M", multiple: "2.8x rev", tip: "Smaller scale, similar geography, lower margins" },
+    { name: "d.light Africa / Growth round", ev: "$156M", multiple: "3.7x rev", tip: "Multi-country distribution model, mature comp" },
   ],
   ceo: { name: "Kwabena Owusu", background: "12 yrs renewable infra, ex-Actis", exit: "Yes", bankruptcy: "None", reputation: 92, execution: 89, leadershipRisk: "Low" }
 };
