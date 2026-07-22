@@ -178,6 +178,11 @@ afterRenderHooks.dashboard = () => {
 
 // Merge Chart.js onClick/onHover interactivity into an options object.
 function withChartInteractivity(options, onPointClick) {
+  // Every .chart-box container has an explicit CSS height, so charts should always
+  // fill it fully rather than enforce their own aspect ratio (which, for doughnut
+  // charts especially, defaults to a 1:1 square and left-aligns with dead space
+  // to the right in any wider container).
+  if (options.maintainAspectRatio === undefined) options.maintainAspectRatio = false;
   options.interaction = options.interaction || { mode: "nearest", intersect: false };
   options.onHover = (evt, elements) => { if (evt.native && evt.native.target) evt.native.target.style.cursor = elements.length ? "pointer" : "default"; };
   options.onClick = (evt, elements) => { if (elements.length && onPointClick) onPointClick(elements[0]); };
@@ -531,7 +536,7 @@ function drawLBOCharts() {
     activeChartInstances.push(new Chart(src, {
       type: "doughnut",
       data: { labels:sourceLabels, datasets:[{ data:sourceData, backgroundColor:[getCssVar('--emerald'),getCssVar('--blue'),getCssVar('--amber')], borderWidth:0 }]},
-      options: withChartInteractivity({ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
+      options: withChartInteractivity({ maintainAspectRatio:false, plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
         const label = sourceLabels[el.index];
         openDetail(label, `$${sourceData[el.index].toFixed(1)}M — ${sourceDesc[label]}`, "SOURCES OF FUNDS");
       })
@@ -701,7 +706,7 @@ afterRenderHooks.market = () => {
   activeChartInstances.push(new Chart(ctx, {
     type:"doughnut",
     data:{ labels: MARKET.competitors.map(c=>c.name), datasets:[{ data: MARKET.competitors.map(c=>c.share), backgroundColor:[getCssVar('--emerald'),getCssVar('--blue'),getCssVar('--amber'),"#2A3140"], borderWidth:0 }]},
-    options: withChartInteractivity({ plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
+    options: withChartInteractivity({ maintainAspectRatio:false, plugins:{legend:{position:"bottom",labels:{color:"#8C97A8",boxWidth:10,font:{size:10}}}} }, (el) => {
       const c = MARKET.competitors[el.index];
       openDetail(c.name, `Estimated market share of ${c.share}%, growing ${c.growth} year-over-year.`, "COMPETITOR");
     })
