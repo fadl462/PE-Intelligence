@@ -202,7 +202,7 @@ function renderDeals() {
         <thead><tr><th>Deal</th><th>Sector / Stage</th><th>Investment</th><th>Score</th><th>Recommendation</th></tr></thead>
         <tbody>
           ${DEALS.map(d => `
-            <tr class="clickable" data-tip="${esc(d.tip)}" title="${esc(d.tip)}" onclick="openDetail('${esc(d.name)}', '${esc(d.tip)} Overall score ${d.score}/100 — ${esc(d.rec)}.', 'DEAL SUMMARY')">
+            <tr class="clickable" data-tip="${esc(d.tip)}" onclick="openDetail('${esc(d.name)}', '${esc(d.tip)} Overall score ${d.score}/100 — ${esc(d.rec)}.', 'DEAL SUMMARY')">
               <td><b>${d.name}</b></td>
               <td style="color:var(--text-dim)">${d.sector}</td>
               <td class="mono">${d.investment}</td>
@@ -356,7 +356,7 @@ function renderModelTabContent() {
 
 function threeStatementHTML() {
   const out = computeModelOutputs(sliderState);
-  const rowTip = (label) => `data-tip="Click for Lani's note on ${esc(label)}" title="Click for Lani's note on ${esc(label)}"`;
+  const rowTip = (label) => `data-tip="Click for Lani's note on ${esc(label)}"`;
   const lineNote = (label) => `Lani flags this line automatically if it moves more than 15% quarter-over-quarter. ${label} is currently tracking in line with the model.`;
   return `
     <div class="two-col">
@@ -490,10 +490,10 @@ function lboHTML() {
         <table>
           <thead><tr><th>Sources</th><th>Amount</th><th>Uses</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr class="clickable" data-tip="Click either side for detail" title="Click either side for detail" onclick="openDetail('Senior Debt / Equity Purchase', 'Senior Debt: $7.2M raised from the bank facility. Equity Purchase: $12.0M, the largest use of funds, covering the GreenTech Solar equity stake itself.', 'SOURCES & USES')"><td>Senior Debt</td><td class="mono">$7.2M</td><td>Equity Purchase</td><td class="mono">$12.0M</td></tr>
-            <tr class="clickable" data-tip="Click either side for detail" title="Click either side for detail" onclick="openDetail('Sponsor Equity / Transaction Fees', 'Sponsor Equity: $5.4M contributed directly by the fund. Transaction Fees: $0.4M covering legal, advisory, and diligence costs for the deal.', 'SOURCES & USES')"><td>Sponsor Equity</td><td class="mono">$5.4M</td><td>Transaction Fees</td><td class="mono">$0.4M</td></tr>
-            <tr class="clickable" data-tip="Click either side for detail" title="Click either side for detail" onclick="openDetail('Seller Note / Working Capital', 'Seller Note: $1.0M in deferred consideration financed by the seller. Working Capital: $1.2M reserved to fund the business through the transition period.', 'SOURCES & USES')"><td>Seller Note</td><td class="mono">$1.0M</td><td>Working Capital</td><td class="mono">$1.2M</td></tr>
-            <tr class="clickable" data-tip="Total transaction size" title="Total transaction size" onclick="openDetail('Total Transaction Size', 'The full $13.6M transaction is fully funded — sources and uses balance exactly, as they must in a completed structure.', 'SOURCES & USES')"><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Senior Debt / Equity Purchase', 'Senior Debt: $7.2M raised from the bank facility. Equity Purchase: $12.0M, the largest use of funds, covering the GreenTech Solar equity stake itself.', 'SOURCES & USES')"><td>Senior Debt</td><td class="mono">$7.2M</td><td>Equity Purchase</td><td class="mono">$12.0M</td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Sponsor Equity / Transaction Fees', 'Sponsor Equity: $5.4M contributed directly by the fund. Transaction Fees: $0.4M covering legal, advisory, and diligence costs for the deal.', 'SOURCES & USES')"><td>Sponsor Equity</td><td class="mono">$5.4M</td><td>Transaction Fees</td><td class="mono">$0.4M</td></tr>
+            <tr class="clickable" data-tip="Click either side for detail" onclick="openDetail('Seller Note / Working Capital', 'Seller Note: $1.0M in deferred consideration financed by the seller. Working Capital: $1.2M reserved to fund the business through the transition period.', 'SOURCES & USES')"><td>Seller Note</td><td class="mono">$1.0M</td><td>Working Capital</td><td class="mono">$1.2M</td></tr>
+            <tr class="clickable" data-tip="Total transaction size" onclick="openDetail('Total Transaction Size', 'The full $13.6M transaction is fully funded — sources and uses balance exactly, as they must in a completed structure.', 'SOURCES & USES')"><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td><td><b>Total</b></td><td class="mono"><b>$13.6M</b></td></tr>
           </tbody>
         </table>
         <div class="section-label">Returns Analysis</div>
@@ -601,7 +601,7 @@ function renderContracts() {
           <thead><tr><th>Contract</th><th>Parties</th><th>Risk</th><th>Flags</th></tr></thead>
           <tbody>
             ${CONTRACTS.map((c,i)=>`
-              <tr class="clickable" data-tip="${esc(c.tip)}" title="${esc(c.tip)}" onclick="selectContract(${i})" style="${i===selectedContract?'background:var(--bg-2)':''}">
+              <tr class="clickable" data-tip="${esc(c.tip)}" onclick="selectContract(${i})" style="${i===selectedContract?'background:var(--bg-2)':''}">
                 <td><b>${c.name}</b></td>
                 <td style="color:var(--text-dim)">${c.parties}</td>
                 <td><span class="pill ${c.risk==='high'?'red':c.risk==='medium'?'amber':'green'}">${c.risk}</span></td>
@@ -690,7 +690,7 @@ function renderMarket() {
         <div class="card-title"><span class="dot"></span>Comparable Transactions</div>
         <table>
           <thead><tr><th>Company / Round</th><th>EV</th><th>Multiple</th></tr></thead>
-          <tbody>${MARKET.comps.map(c=>`<tr class="clickable" data-tip="${esc(c.tip)}" title="${esc(c.tip)}" onclick="openDetail('${esc(c.name)}', '${esc(c.tip)} Enterprise value ${esc(c.ev)} at ${esc(c.multiple)}.', 'COMPARABLE TRANSACTION')"><td>${c.name}</td><td class="mono">${c.ev}</td><td class="mono">${c.multiple}</td></tr>`).join("")}</tbody>
+          <tbody>${MARKET.comps.map(c=>`<tr class="clickable" data-tip="${esc(c.tip)}" onclick="openDetail('${esc(c.name)}', '${esc(c.tip)} Enterprise value ${esc(c.ev)} at ${esc(c.multiple)}.', 'COMPARABLE TRANSACTION')"><td>${c.name}</td><td class="mono">${c.ev}</td><td class="mono">${c.multiple}</td></tr>`).join("")}</tbody>
         </table>
       </div>
     </div>
@@ -868,7 +868,7 @@ function renderPortfolio() {
         <table>
           <thead><tr><th>Company</th><th>Stage</th><th>IRR</th><th>MOIC</th><th>Status</th></tr></thead>
           <tbody>${PORTFOLIO_COMPANIES.map(p=>`
-            <tr class="clickable" data-tip="${esc(p.detail)}" title="${esc(p.detail)}" onclick="openDetail('${esc(p.name)}', '${esc(p.detail)} Currently tracking ${esc(p.irr)} IRR / ${esc(p.moic)} MOIC.', 'PORTFOLIO COMPANY')">
+            <tr class="clickable" data-tip="${esc(p.detail)}" onclick="openDetail('${esc(p.name)}', '${esc(p.detail)} Currently tracking ${esc(p.irr)} IRR / ${esc(p.moic)} MOIC.', 'PORTFOLIO COMPANY')">
               <td><b>${p.name}</b></td><td style="color:var(--text-dim)">${p.stage}</td>
               <td class="mono" style="color:${p.irr.includes('-')?'var(--red)':'var(--emerald)'}">${p.irr}</td>
               <td class="mono">${p.moic}</td>
@@ -933,7 +933,7 @@ function renderFundAdmin() {
           <thead><tr><th>LP</th><th>Commitment</th><th>Called</th><th>Status</th></tr></thead>
           <tbody>
             ${LP_REGISTRY.map(lp => `
-              <tr class="clickable" data-tip="${esc(lp.detail)}" title="${esc(lp.detail)}" onclick="openDetail('${esc(lp.name)}', '${esc(lp.detail)} Committed ${esc(lp.commitment)}, called ${esc(lp.called)} to date.', 'LIMITED PARTNER')">
+              <tr class="clickable" data-tip="${esc(lp.detail)}" onclick="openDetail('${esc(lp.name)}', '${esc(lp.detail)} Committed ${esc(lp.commitment)}, called ${esc(lp.called)} to date.', 'LIMITED PARTNER')">
                 <td>${lp.name}</td><td class="mono">${lp.commitment}</td><td class="mono">${lp.called}</td>
                 <td><span class="pill ${lp.status==='Current'?'green':'amber'}">${lp.status}</span></td>
               </tr>`).join("")}
@@ -973,11 +973,11 @@ function renderInvestors() {
         <table>
           <thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr class="clickable" data-tip="Click for detail" title="Click for detail" onclick="openDetail('Jun 2026 Distribution', 'Return of capital following the partial realization of an earlier fund position.', 'DISTRIBUTION')"><td>Jun 2026</td><td>Return of Capital</td><td class="mono">$3.1M</td></tr>
-            <tr class="clickable" data-tip="Click for detail" title="Click for detail" onclick="openDetail('Mar 2026 Distribution', 'Realized gain distributed following the exit of a Fund II portfolio company.', 'DISTRIBUTION')"><td>Mar 2026</td><td>Realized Gain</td><td class="mono">$4.2M</td></tr>
-            <tr class="clickable" data-tip="Click for detail" title="Click for detail" onclick="openDetail('Dec 2025 Distribution', 'Return of capital from a partial secondary sale.', 'DISTRIBUTION')"><td>Dec 2025</td><td>Return of Capital</td><td class="mono">$2.3M</td></tr>
-            <tr class="clickable" data-tip="Click for detail" title="Click for detail" onclick="openDetail('Sep 2025 Distribution', 'Realized gain distributed following a partial exit in the fund\\'s logistics portfolio.', 'DISTRIBUTION')"><td>Sep 2025</td><td>Realized Gain</td><td class="mono">$2.9M</td></tr>
-            <tr class="clickable" data-tip="Click for detail" title="Click for detail" onclick="openDetail('Jun 2025 Distribution', 'Return of capital from scheduled debt amortization proceeds at a portfolio company.', 'DISTRIBUTION')"><td>Jun 2025</td><td>Return of Capital</td><td class="mono">$1.8M</td></tr>
+            <tr class="clickable" data-tip="Click for detail" onclick="openDetail('Jun 2026 Distribution', 'Return of capital following the partial realization of an earlier fund position.', 'DISTRIBUTION')"><td>Jun 2026</td><td>Return of Capital</td><td class="mono">$3.1M</td></tr>
+            <tr class="clickable" data-tip="Click for detail" onclick="openDetail('Mar 2026 Distribution', 'Realized gain distributed following the exit of a Fund II portfolio company.', 'DISTRIBUTION')"><td>Mar 2026</td><td>Realized Gain</td><td class="mono">$4.2M</td></tr>
+            <tr class="clickable" data-tip="Click for detail" onclick="openDetail('Dec 2025 Distribution', 'Return of capital from a partial secondary sale.', 'DISTRIBUTION')"><td>Dec 2025</td><td>Return of Capital</td><td class="mono">$2.3M</td></tr>
+            <tr class="clickable" data-tip="Click for detail" onclick="openDetail('Sep 2025 Distribution', 'Realized gain distributed following a partial exit in the fund\\'s logistics portfolio.', 'DISTRIBUTION')"><td>Sep 2025</td><td>Realized Gain</td><td class="mono">$2.9M</td></tr>
+            <tr class="clickable" data-tip="Click for detail" onclick="openDetail('Jun 2025 Distribution', 'Return of capital from scheduled debt amortization proceeds at a portfolio company.', 'DISTRIBUTION')"><td>Jun 2025</td><td>Return of Capital</td><td class="mono">$1.8M</td></tr>
           </tbody>
         </table>
         <div class="section-label">Tax Documents</div>
@@ -1210,4 +1210,71 @@ initCmdk();
 initDetailModal();
 buildNotifBell();
 startLaniTicker();
+// ---------- GLOBAL TOOLTIP (viewport-clamped, portal-style) ----------
+function initGlobalTooltip() {
+  const tip = document.getElementById("js-tooltip");
+  const tipText = document.getElementById("js-tooltip-text");
+  const MARGIN = 10; // minimum gap from any viewport edge
+  let currentTarget = null;
+
+  function showTip(target) {
+    const text = target.getAttribute("data-tip");
+    if (!text) return;
+    currentTarget = target;
+    tipText.textContent = text;
+    tip.classList.add("show");
+
+    const r = target.getBoundingClientRect();
+    // Measure tooltip size (must be visible/in-flow to measure, so do it after adding "show")
+    const tipRect = tip.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Preferred position: centered above the target.
+    let left = r.left + r.width / 2 - tipRect.width / 2;
+    let top = r.top - tipRect.height - 10;
+    let arrowClass = "arrow-bottom"; // arrow points down at the target from above
+
+    // If there's no room above, flip to below the target.
+    if (top < MARGIN) {
+      top = r.bottom + 10;
+      arrowClass = "arrow-top";
+    }
+    // Clamp vertically as a last resort (shouldn't normally trigger).
+    if (top + tipRect.height > vh - MARGIN) top = vh - MARGIN - tipRect.height;
+    if (top < MARGIN) top = MARGIN;
+
+    // Clamp horizontally so it never runs off-screen or behind the sidebar.
+    if (left < MARGIN) left = MARGIN;
+    if (left + tipRect.width > vw - MARGIN) left = vw - MARGIN - tipRect.width;
+
+    tip.classList.remove("arrow-top", "arrow-bottom");
+    tip.classList.add(arrowClass);
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+
+    // Keep the arrow pointing at the target's horizontal center, even after clamping.
+    const arrowX = Math.max(14, Math.min(tipRect.width - 14, (r.left + r.width / 2) - left));
+    tip.querySelector(".js-tooltip-arrow").style.left = arrowX + "px";
+  }
+
+  function hideTip() {
+    currentTarget = null;
+    tip.classList.remove("show");
+  }
+
+  document.addEventListener("mouseover", (e) => {
+    const target = e.target.closest("[data-tip]");
+    if (target && target !== currentTarget) showTip(target);
+  });
+  document.addEventListener("mouseout", (e) => {
+    const target = e.target.closest("[data-tip]");
+    if (target && (!e.relatedTarget || !target.contains(e.relatedTarget))) hideTip();
+  });
+  // Hide on scroll/click so a stale tooltip never lingers over new content.
+  document.getElementById("main").addEventListener("scroll", hideTip, { passive: true });
+  document.addEventListener("click", hideTip);
+}
+
 initMobileSidebar();
+initGlobalTooltip();

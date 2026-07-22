@@ -513,32 +513,30 @@ input[type=range]::-webkit-slider-thumb{
 }
 .upload-dropzone-icon svg{width:20px; height:20px;}
 
-/* ---------- TOOLTIP SYSTEM ---------- */
-[data-tip]{position:relative;}
-[data-tip]::after{
-  content:attr(data-tip);
-  position:absolute; left:50%; bottom:calc(100% + 10px); transform:translateX(-50%) translateY(4px);
+/* ---------- TOOLTIP SYSTEM ----------
+   A single body-level tooltip element, positioned and clamped to the viewport
+   by JS (see initGlobalTooltip in app.js). This avoids two problems pure-CSS
+   ::before/::after tooltips have: (1) centered bubbles overflowing off-screen
+   or behind the sidebar near the left edge, and (2) getting clipped by any
+   ancestor with overflow set (e.g. #main's overflow-y:auto also clips the
+   x-axis per spec, since one non-visible axis forces the other to 'auto' too). */
+[data-tip]{ cursor:pointer; }
+#js-tooltip{
+  position:fixed; z-index:90; pointer-events:none;
   background:#0C1016; color:#E9EDF3; font-size:11px; font-weight:500; line-height:1.4;
   padding:7px 11px; border-radius:8px; border:1px solid rgba(255,255,255,.08);
-  white-space:normal; width:max-content; max-width:220px; text-align:center;
+  white-space:normal; width:max-content; max-width:240px; text-align:center;
   box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
-  opacity:0; visibility:hidden; pointer-events:none; z-index:80;
-  transition:opacity .15s ease, transform .15s ease;
+  opacity:0; visibility:hidden; transform:translateY(4px);
+  transition:opacity .12s ease, transform .12s ease;
 }
-[data-tip]::before{
-  content:""; position:absolute; left:50%; bottom:calc(100% + 5px); transform:translateX(-50%);
-  border:5px solid transparent; border-top-color:#0C1016;
-  opacity:0; visibility:hidden; pointer-events:none; z-index:80; transition:opacity .15s ease;
+#js-tooltip.show{ opacity:1; visibility:visible; transform:translateY(0); }
+#js-tooltip .js-tooltip-arrow{
+  position:absolute; left:50%; transform:translateX(-50%);
+  width:0; height:0; border:5px solid transparent;
 }
-[data-tip]:hover::after, [data-tip]:hover::before{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
-/* CRITICAL: pseudo-element content on table-row/table-structural elements forces
-   browsers to generate an invisible anonymous table-cell to hold it, which corrupts
-   the table's column count/alignment. Table rows get a native title-attribute
-   tooltip instead (see .clickable tr / tr.clickable handling in JS). */
-tr[data-tip]::before, tr[data-tip]::after,
-table[data-tip]::before, table[data-tip]::after,
-thead[data-tip]::before, thead[data-tip]::after,
-tbody[data-tip]::before, tbody[data-tip]::after{ content:none !important; }
+#js-tooltip.arrow-bottom .js-tooltip-arrow{ top:100%; border-top-color:#0C1016; }
+#js-tooltip.arrow-top .js-tooltip-arrow{ bottom:100%; border-bottom-color:#0C1016; }
 .clickable-item, .card.clickable, .deal-card, .check-row, .engine-chip, tr.clickable,
 .deck-thumb, .sec-pill, .stat-card.clickable{cursor:pointer;}
 .card.clickable, .stat-card.clickable{transition:border-color .15s, transform .15s, background .15s;}
@@ -818,6 +816,9 @@ tbody[data-tip]::before, tbody[data-tip]::after{ content:none !important; }
 
 <!-- TOAST -->
 <div id="toast"></div>
+
+<!-- GLOBAL TOOLTIP (JS-positioned, viewport-clamped) -->
+<div id="js-tooltip"><span id="js-tooltip-text"></span><span class="js-tooltip-arrow"></span></div>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
